@@ -2,6 +2,7 @@ package com.gorilla.gorillabook.viewModel;
 
 import com.gorilla.gorillabook.model.Feed;
 import com.gorilla.gorillabook.util.ApiAdapter;
+import com.gorilla.gorillabook.util.FeedsManager;
 import com.gorilla.gorillabook.view.SplashView;
 
 import java.util.List;
@@ -31,7 +32,8 @@ public class SplashViewModel {
 
                     @Override
                     public void onNext(List<Feed> feeds) {
-                        view.onFeedLoadFinish(feeds);
+                        FeedsManager.getInstance().setFeeds(feeds);
+                        view.onFeedLoadFinish();
                     }
 
                     @Override

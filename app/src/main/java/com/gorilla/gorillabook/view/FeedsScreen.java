@@ -5,29 +5,27 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.gorilla.gorillabook.R;
-import com.gorilla.gorillabook.model.Feed;
+import com.gorilla.gorillabook.viewModel.FeedsViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.gorilla.gorillabook.util.Constants.FEEDS_ARGUMENT;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FeedsScreen extends Fragment {
+public class FeedsScreen extends Fragment implements FeedsView{
 
     private RecyclerView feedRecyclerView;
     private FeedAdapter feedAdapter;
-    private List<Feed> feeds;
+    private FeedsViewModel viewModel;
+    private EditText composeEditText;
 
 
     public FeedsScreen() {
@@ -47,14 +45,25 @@ public class FeedsScreen extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
+        composeEditText = getActivity().findViewById(R.id.compose);
+
+        viewModel = new FeedsViewModel(this);
 
         feedRecyclerView = view.findViewById(R.id.feeds_recycler_view);
-       if(getArguments() != null){
-           Bundle arguments = getArguments();
-           feeds = arguments.getParcelableArrayList(FEEDS_ARGUMENT);
-       }
-        feedAdapter = new FeedAdapter(feeds, this);
+        feedAdapter = new FeedAdapter(viewModel.getFeeds(), this);
         feedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         feedRecyclerView.setAdapter(feedAdapter);
+
+        composeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean isFocused) {
+                if(isFocused){
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.content, new ComposeScreen());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+            }
+        });
     }
 }
