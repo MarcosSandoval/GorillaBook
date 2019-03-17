@@ -6,4 +6,6 @@
     <string name="compose_hint">What\'s on your mind</string>
     <string name="fake_hello">Hello Jane</string>
     <string name="fake_date">TUESDAY, JUNE 6</string>
+    <string name="text_counter">0/150</string>
+    <string name="create_post">Create Post</string>
 </resources>

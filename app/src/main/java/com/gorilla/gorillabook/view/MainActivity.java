@@ -15,13 +15,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //getting the toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        //placing toolbar in place of actionbar
-        setSupportActionBar(toolbar);
-        toolbar.setVisibility(View.GONE);
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, new SplashScreen());
         transaction.commit();
