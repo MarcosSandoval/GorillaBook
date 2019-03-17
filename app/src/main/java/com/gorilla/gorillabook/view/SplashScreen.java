@@ -18,6 +18,8 @@ import com.gorilla.gorillabook.viewModel.SplashViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gorilla.gorillabook.util.Constants.FEEDS_ARGUMENT;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,7 +54,7 @@ public class SplashScreen extends Fragment implements SplashView{
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle arguments = new Bundle();
-        arguments.putParcelableArrayList( "FEEDS" , (ArrayList<? extends Parcelable>) feeds);
+        arguments.putParcelableArrayList( FEEDS_ARGUMENT , (ArrayList<? extends Parcelable>) feeds);
 
         FeedsScreen fragment = new FeedsScreen();
         fragment.setArguments(arguments);

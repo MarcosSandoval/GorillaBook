@@ -11,6 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiAdapter {
 
+    private static final String BASE_URL= "http://gl-endpoint.herokuapp.com";
+
     private static ApiAdapter mInstance;
     GorillaApi api;
 
@@ -24,11 +26,10 @@ public class ApiAdapter {
 
     private ApiAdapter() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://gl-endpoint.herokuapp.com")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-
         api =  retrofit.create(GorillaApi.class);
     }
 

@@ -14,7 +14,6 @@ import io.reactivex.schedulers.Schedulers;
 public class SplashViewModel {
 
     private SplashView view;
-    private List<Feed> feeds;
 
 
     public SplashViewModel(SplashView myView) {
