@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.gorilla.gorillabook.R;
 import com.gorilla.gorillabook.model.Feed;
 
-import org.w3c.dom.Text;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedHolder>{
@@ -33,7 +33,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedHolder>{
     @Override
     public void onBindViewHolder(@NonNull FeedHolder feedHolder, int i) {
         feedHolder.nameTextView.setText(feeds.get(i).getFirstName());
-        feedHolder.dateTextView.setText(Integer.toString(feeds.get(i).getPostDate()));
+        feedHolder.dateTextView.setText(convertTimeStamp(feeds.get(i).getPostDate()));
         feedHolder.postTextView.setText(feeds.get(i).getBody());
     }
 
@@ -50,9 +50,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedHolder>{
 
         public FeedHolder(View v) {
             super(v);
-            nameTextView = (TextView) itemView.findViewById(R.id.name);
-            dateTextView = (TextView) itemView.findViewById(R.id.name);
-            postTextView = (TextView) itemView.findViewById(R.id.name);
+            nameTextView = itemView.findViewById(R.id.name);
+            dateTextView = itemView.findViewById(R.id.date);
+            postTextView = itemView.findViewById(R.id.post);
         }
+    }
+
+    private String convertTimeStamp(int time){
+        Date date = new Date(time*1000L);
+        // format of the date
+        SimpleDateFormat jdf = new SimpleDateFormat("MM/dd/yyyy");
+       // jdf.setTimeZone(TimeZone.getTimeZone("GMT-4"));
+        return jdf.format(date);
     }
 }

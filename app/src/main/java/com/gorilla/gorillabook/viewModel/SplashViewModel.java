@@ -32,7 +32,7 @@ public class SplashViewModel {
 
                     @Override
                     public void onNext(List<Feed> feeds) {
-                        view.onFeedLoadFinish();
+                        view.onFeedLoadFinish(feeds);
                     }
 
                     @Override

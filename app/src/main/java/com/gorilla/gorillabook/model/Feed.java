@@ -1,10 +1,23 @@
 package com.gorilla.gorillabook.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class Feed {
+public class Feed implements Parcelable {
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Feed createFromParcel(Parcel in) {
+            return new Feed(in);
+        }
+
+        public Feed[] newArray(int size) {
+            return new Feed[size];
+        }
+    };
 
     private int id;
     @SerializedName("first_name")
@@ -58,12 +71,34 @@ public class Feed {
         this.image = image;
     }
 
+    public Feed(Parcel parcel) {
+        this.id = parcel.readInt();
+        this.firstName = parcel.readString();
+        this.body = parcel.readString();
+        this.postDate = parcel.readInt();
+        this.image = parcel.readString();
+    }
+
     public Feed(int id, String firstName, String body, int postDate, String image) {
         this.id = id;
         this.firstName = firstName;
         this.body = body;
         this.postDate = postDate;
         this.image = image;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(this.id);
+        parcel.writeString(this.firstName);
+        parcel.writeString(this.body);
+        parcel.writeInt(this.postDate);
+        parcel.writeString(this.image);
     }
 }
 

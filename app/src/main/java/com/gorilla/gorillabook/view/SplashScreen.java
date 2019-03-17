@@ -2,6 +2,7 @@ package com.gorilla.gorillabook.view;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,8 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gorilla.gorillabook.R;
+import com.gorilla.gorillabook.model.Feed;
 import com.gorilla.gorillabook.viewModel.SplashViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -44,9 +48,16 @@ public class SplashScreen extends Fragment implements SplashView{
     }
 
     @Override
-    public void onFeedLoadFinish() {
+    public void onFeedLoadFinish(List<Feed> feeds) {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content, new FeedsScreen());
+
+        Bundle arguments = new Bundle();
+        arguments.putParcelableArrayList( "FEEDS" , (ArrayList<? extends Parcelable>) feeds);
+
+        FeedsScreen fragment = new FeedsScreen();
+        fragment.setArguments(arguments);
+
+        transaction.replace(R.id.content, fragment);
         transaction.commit();
     }
 }
